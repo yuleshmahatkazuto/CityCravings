@@ -51,3 +51,8 @@
   text-decoration: none;
   cursor: pointer;
 }
+
+.hamburgerMenu img{
+  width: 28px;
+  cursor: pointer;
+}

@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Forgot from "./components/Forgot";
+import Order from "./components/Order";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgot" element={<Forgot />} />
+        <Route path="/order" element={<Order />} />
       </Routes>
     </Router>
   );

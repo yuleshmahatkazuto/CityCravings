@@ -4,19 +4,21 @@ import styles from "./hero.module.css";
 export default function Hero() {
   return (
     <div className={styles.heroContainer}>
-      <div className={styles.leftSide}>
-        <div className={styles.head1}>
-          <h1>Grab your meal</h1>
-        </div>
-        <div className={styles.head2}>
-          <h2>
-            Get your meals delivered <br />
-            at Home
-          </h2>
-        </div>
-        <div className={styles.searchBar}>
-          <input type="text" placeholder="Where do we deliver?"></input>
-          <button type="submit">Search</button>
+      <div className={styles.leftSideContainer}>
+        <div className={styles.leftSide}>
+          <div className={styles.head1}>
+            <h1>Grab your meal</h1>
+          </div>
+          <div className={styles.head2}>
+            <h2>
+              Get your meals delivered <br />
+              at Home
+            </h2>
+          </div>
+          <div className={styles.searchBar}>
+            <input type="text" placeholder="Where do we deliver?"></input>
+            <button type="submit">Search</button>
+          </div>
         </div>
       </div>
       <div className={styles.rightSide}>

@@ -3,6 +3,7 @@ import styles from "./nav.module.css";
 import { Link } from "react-router-dom";
 
 export default function Nav() {
+  const [loginStatus, setLoginStatus] = useState(false);
   return (
     <div className={styles.navContainer}>
       <Link to="/" className={styles.customLink}>
@@ -21,19 +22,27 @@ export default function Nav() {
             <img src="/assets/plate%20image.png" className={styles.plate} />
           </div>
           <div>
-            <p className={styles.navText}>Order</p>
-          </div>
-        </div>
-        <div className={styles.rightLeftSide}>
-          <div>
-            <img src="/assets/login.png" className={styles.loginImg} />
-          </div>
-          <div>
             <p className={styles.navText}>
-              <Link to="/login">Login</Link>
+              <Link to="/order">Order</Link>
             </p>
           </div>
         </div>
+        {loginStatus ? (
+          <div className={styles.hamburgerMenu}>
+            <img src="/assets/hamburger.svg" alt="Menu" />
+          </div>
+        ) : (
+          <div className={styles.rightLeftSide}>
+            <div>
+              <img src="/assets/login.png" className={styles.loginImg} />
+            </div>
+            <div>
+              <p className={styles.navText}>
+                <Link to="/login">Login</Link>
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
