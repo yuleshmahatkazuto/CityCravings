@@ -1,0 +1,53 @@
+
+.navContainer{
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0 0.3rem;
+  box-shadow: 0px 4px 8px rgba(24, 24, 24, 0.2);
+  width: 100%;
+}
+.leftSide{
+  display: flex;
+  align-items: center;
+}
+.rightSide{
+  display: flex; 
+  align-items: center;
+  gap: 1rem;
+
+}
+
+.rightLeftSide{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.title{
+  color: #32C917;
+  text-shadow: 2px 2px 4px rgba(0,0,0, 0.5);
+  font-family: var(--font-irish);
+}
+
+.navText{
+  font-family: var(--font-irish);
+}
+
+.navLogo{
+  width: 80%;
+} 
+
+.loginImg{
+  width: 35px;
+}
+
+.plate{
+ width: 55px;
+}
+
+.customLink:hover{
+  text-decoration: none;
+  cursor: pointer;
+}

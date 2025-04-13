@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+
+:root {
+  /* colors */
+  --color-text: white;
+  --color-primary: #32C917;
+  --color-secondary: #57e7ff;
+  --color-black: black;
+  --color-grey: #D9D9D9;
+  --color-lightGrey: rgba(228, 228, 228, 0.65);
+
+  /* fonts */
+  --font-irish: 'Irish Grover', Arial, Helvetica;
+  --font-bubble: 'Rubik Bubbles', Arial, Helvetica;
+  --font-ubuntu: 'Ubuntu', Arial, Helvetica;
+}
