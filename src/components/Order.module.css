@@ -1,0 +1,34 @@
+.categoryBar{
+  display: flex;
+  width: 100%;
+  position: relative;
+  justify-content: space-around;
+  padding: 15px;
+  font-family: var(--font-irish);
+  font-size: 30px;  
+}
+
+.categories{
+  display: flex;
+  text-align: center;
+  gap: 5px;
+}
+
+.flags{
+  width: 30px;
+}
+
+.foodNBasket{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  position: relative;
+}
+
+.foodSection{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+

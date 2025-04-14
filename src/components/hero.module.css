@@ -49,16 +49,16 @@
   justify-content: space-between;
   flex-wrap: wrap;
   min-height: 40px;
+  align-items: center;
 }
 
 .searchBar input{  
   padding: 0 10px;
   border: none;
-  outline: none; 
-  height: 100%; 
+  outline: none;
   border-radius: 20px;
   width: 73%;
-  flex: 1 1 60%;
+  flex: 1 1 60%;  
 }
 
 .searchBar button{
@@ -77,9 +77,8 @@
   max-width: 100%;
   font-family: var(--font-irish);
   cursor: pointer;
+  height: 100%;
 }
-
-
 /* right side css */
 
 .rightSide{
