@@ -4,6 +4,7 @@ import Nav from "./nav";
 import Basket from "./Food/Basket.jsx";
 import FoodCard from "./Food/FoodCard.jsx";
 import Foods from "./Food/Food.js";
+import Footer from "./Footer.jsx";
 
 export default function Order() {
   return (
@@ -54,12 +55,14 @@ export default function Order() {
                 title={food.title}
                 price={food.price}
                 information={food.information}
+                imageUrl={food.imgSrc}
               />
             );
           })}
         </div>
         <Basket />
       </section>
+      <Footer />
     </div>
   );
 }

@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./FoodCard.module.css";
 import FoodImg from "./FoodImage";
 
-export default function FoodCard({ title, price, information }) {
+export default function FoodCard({ title, price, information, imageUrl }) {
   return (
     <div className={styles.container}>
       <div className={styles.info}>
@@ -10,7 +10,7 @@ export default function FoodCard({ title, price, information }) {
         <h2 className={styles.FoodPrice}>{price}</h2>
         <p className={styles.information}>{information}</p>
       </div>
-      {/* <FoodImg className={styles.image} /> */}
+      <FoodImg className={styles.image} imageUrl={imageUrl} />
     </div>
   );
 }
