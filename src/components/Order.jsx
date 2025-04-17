@@ -1,18 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Order.module.css";
 import Nav from "./nav";
 import Basket from "./Food/Basket.jsx";
 import FoodCard from "./Food/FoodCard.jsx";
-import Foods from "./Food/Food.js";
+import Nepali from "./Food/Nepali.js";
+import Indian from "./Food/Indian.js";
+import Bangladeshi from "./Food/Bangladeshi.js";
+import Tibetian from "./Food/Tibetian.js";
 import Footer from "./Footer.jsx";
 
 export default function Order() {
+  const [selectedCategory, setSelectedCategory] = useState("nepali");
+
+  const foodCategory = () => {
+    switch (selectedCategory) {
+      case "nepali":
+        return Nepali;
+        break;
+
+      case "indian":
+        return Indian;
+        break;
+
+      case "bangladeshi":
+        return Bangladeshi;
+        break;
+
+      case "tibetian":
+        return Tibetian;
+        break;
+
+      default:
+        return [];
+        break;
+    }
+  };
+
+  function handleClick(category) {
+    setSelectedCategory(category);
+  }
+
   return (
     <div>
       <Nav />
       {/* category bar */}
       <div className={styles.categoryBar}>
-        <div className={styles.categories}>
+        <div
+          className={styles.categories}
+          onClick={() => handleClick("nepali")}
+        >
           <img
             src="/assets/nepal%20flag.svg"
             alt="flag of Nepal"
@@ -20,7 +56,10 @@ export default function Order() {
           />
           <span>Nepali</span>
         </div>
-        <div className={styles.categories}>
+        <div
+          className={styles.categories}
+          onClick={() => handleClick("indian")}
+        >
           <img
             src="/assets/india%20flag.svg"
             alt="flag of India"
@@ -28,7 +67,10 @@ export default function Order() {
           />
           <span>Indian</span>
         </div>
-        <div className={styles.categories}>
+        <div
+          className={styles.categories}
+          onClick={() => handleClick("bangladeshi")}
+        >
           <img
             src="/assets/bangladesh%20flag.svg"
             alt="flag of Bangladesh"
@@ -36,7 +78,10 @@ export default function Order() {
           />
           <span>Bangladeshi</span>
         </div>
-        <div className={styles.categories}>
+        <div
+          className={styles.categories}
+          onClick={() => handleClick("tibetian")}
+        >
           <img
             src="/assets/tibet%20flag.svg"
             alt="flag of Tibet"
@@ -48,7 +93,7 @@ export default function Order() {
       {/* category bar */}
       <section className={styles.foodNBasket}>
         <div className={styles.foodSection}>
-          {Foods.map((food, index) => {
+          {foodCategory().map((food, index) => {
             return (
               <FoodCard
                 key={index}
