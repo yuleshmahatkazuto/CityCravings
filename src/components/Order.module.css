@@ -12,6 +12,8 @@
   display: flex;
   text-align: center;
   gap: 5px;
+  cursor: pointer;
+  padding: 5px;
 }
 
 .flags{
@@ -32,3 +34,7 @@
   align-items: center;
 }
 
+.selectedCategory{
+  background-color: var(--color-grey);
+  border-radius: 5px;
+}

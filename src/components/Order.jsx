@@ -46,7 +46,9 @@ export default function Order() {
       {/* category bar */}
       <div className={styles.categoryBar}>
         <div
-          className={styles.categories}
+          className={`${styles.categories} ${
+            selectedCategory === "nepali" ? styles.selectedCategory : ""
+          }`}
           onClick={() => handleClick("nepali")}
         >
           <img
@@ -57,7 +59,9 @@ export default function Order() {
           <span>Nepali</span>
         </div>
         <div
-          className={styles.categories}
+          className={`${styles.categories} ${
+            selectedCategory === "indian" ? styles.selectedCategory : ""
+          }`}
           onClick={() => handleClick("indian")}
         >
           <img
@@ -68,7 +72,9 @@ export default function Order() {
           <span>Indian</span>
         </div>
         <div
-          className={styles.categories}
+          className={`${styles.categories} ${
+            selectedCategory === "bangladeshi" ? styles.selectedCategory : ""
+          }`}
           onClick={() => handleClick("bangladeshi")}
         >
           <img
@@ -79,7 +85,9 @@ export default function Order() {
           <span>Bangladeshi</span>
         </div>
         <div
-          className={styles.categories}
+          className={`${styles.categories} ${
+            selectedCategory === "tibetian" ? styles.selectedCategory : ""
+          }`}
           onClick={() => handleClick("tibetian")}
         >
           <img
