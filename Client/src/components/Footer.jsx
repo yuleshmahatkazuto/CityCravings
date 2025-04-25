@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./Footer.module.css";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -10,20 +11,16 @@ export default function Footer() {
       </div>
       <div className={styles.clickables}>
         <div>
-          <a href="/about.html">About Us</a>
+          <Link to="/about">About Us</Link>
         </div>
         <div>
           <a href="/contact.html">Contact Us</a>
         </div>
-        <div>
-          <a href="/about.html">About Us</a>
-        </div>
+        <div></div>
         <div>
           <a href="/news.html">Newsroom</a>
         </div>
-        <div>
-          <a href="/about.html">About Us</a>
-        </div>
+        <div></div>
         <div>
           <a href="/privacy.html">Privary Statement</a>
         </div>

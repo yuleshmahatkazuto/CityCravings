@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./Order.module.css";
-import Nav from "./nav";
+import Nav from "./nav.jsx";
 import Basket from "./Food/Basket.jsx";
 import FoodCard from "./Food/FoodCard.jsx";
 import Nepali from "./Food/Nepali.js";
