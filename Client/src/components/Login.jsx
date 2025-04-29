@@ -94,9 +94,11 @@ export default function Login() {
             <hr />
           </div>
           <div>
-            <button type="submit" className={styles.createAccountButton}>
-              Create an account
-            </button>
+            <Link to="/register">
+              <button type="submit" className={styles.createAccountButton}>
+                Create an account
+              </button>
+            </Link>
           </div>
           <div className={styles.disclaimer}>
             By loggin in, you're confirming that you agree to our privacy

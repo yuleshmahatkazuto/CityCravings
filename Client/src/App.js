@@ -7,6 +7,7 @@ import Login from "./components/Login";
 import Forgot from "./components/Forgot";
 import Order from "./components/Order";
 import About from "./components/About";
+import Register from "./components/Register.jsx";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/forgot" element={<Forgot />} />
         <Route path="/about" element={<About />} />
         <Route path="/order" element={<Order />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </Router>
   );
