@@ -1,9 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Login.module.css";
 import Navbar from "./nav";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
-export default function () {
+export default function Login() {
+  const navigate = useNavigate();
+  const [credentials, setCredentials] = useState({ email: "", password: "" });
+
+  function handleChange(event) {
+    setCredentials({ ...credentials, [event.target.type]: event.target.value });
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    handleLogin();
+  }
+
+  async function handleLogin() {
+    try {
+      console.log("Try block is being executed.");
+      console.log(credentials.email, credentials.password);
+      const response = await axios.post("http://localhost:4000/login", {
+        email: credentials.email,
+        password: credentials.password,
+      });
+      navigate("/home");
+    } catch (error) {
+      console.log("Error navigating to home page.");
+    }
+  }
+
   return (
     <div className={styles.container}>
       <Navbar />
@@ -25,36 +52,42 @@ export default function () {
             <span>or</span>
             <hr />
           </div>
-          <div className={styles.head2}>
-            <span>Email</span>
-          </div>
-          <div className={styles.emailFieldContainer}>
-            <input
-              className={styles.emailField}
-              placeholder="Email"
-              type="email"
-            />
-          </div>
-          <div className={styles.head2}>
-            <span>Password</span>
-          </div>
-          <div className={styles.passwordFieldContainer}>
-            <input
-              className={styles.passwordField}
-              placeholder="Password"
-              type="password"
-            />
-          </div>
-          <div>
-            <span className={styles.forgotPassword}>
-              <Link to="/forgot">Forgot password?</Link>
-            </span>
-          </div>
-          <div>
-            <button type="submit" className={styles.loginButton}>
-              Log in
-            </button>
-          </div>
+          <form className={styles.form2} onSubmit={handleSubmit}>
+            <div className={styles.head2}>
+              <span>Email</span>
+            </div>
+            <div className={styles.emailFieldContainer}>
+              <input
+                className={styles.emailField}
+                placeholder="Email"
+                type="email"
+                value={credentials.email}
+                onChange={handleChange}
+              />
+            </div>
+            <div className={styles.head2}>
+              <span>Password</span>
+            </div>
+            <div className={styles.passwordFieldContainer}>
+              <input
+                className={styles.passwordField}
+                placeholder="Password"
+                type="password"
+                value={credentials.password}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <span className={styles.forgotPassword}>
+                <Link to="/forgot">Forgot password?</Link>
+              </span>
+            </div>
+            <div>
+              <button type="submit" className={styles.loginButton}>
+                Log in
+              </button>
+            </div>
+          </form>
           <div className={styles.divider}>
             <hr />
             <span className={styles.notRegistered}>Not registered yet?</span>
