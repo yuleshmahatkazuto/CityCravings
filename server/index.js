@@ -29,7 +29,6 @@ app.use(
 app.get("/api", async (req, res) => {});
 
 app.post("/login", async (req, res) => {
-  //password Authentication and login
   const email = req.body.email;
   const password = req.body.password;
   try {
@@ -51,7 +50,7 @@ app.post("/login", async (req, res) => {
       .status(500)
       .json({ verified: false, message: "Server Error try again later." });
   }
-});
+}); //password Authentication and login
 
 app.post("register", async (req, res) => {
   const email = req.body.email;
@@ -59,10 +58,18 @@ app.post("register", async (req, res) => {
   const name = req.body.name;
   const address = req.body.address;
   const phone = req.body.phone;
-  const result = await pool.query(
-    "INSERT INTO users (name, email, password, address, phone_number, role) values($1, $2, $3, $4, $5, $6)",
-    [name, email, password, address, phone, "customer"]
-  );
+  try {
+    const result = await pool.query(
+      "INSERT INTO users (name, email, password, address, phone_number, role) values($1, $2, $3, $4, $5, $6)",
+      [name, email, password, address, phone, "customer"]
+    );
+    console.log("Successfully registered the user!!");
+    res.json({ message: "Registration successful" });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "A server error occured during registration process." });
+  }
 });
 
 app.listen(port, () => {

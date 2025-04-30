@@ -3,8 +3,10 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Register.module.css";
 import Nav from "./nav.jsx";
 import InputField from "./InputField.jsx";
+import axios from "axios";
 
 export default function Register() {
+  const navigate = useNavigate();
   const [details, setDetails] = useState({
     name: "",
     email: "",
@@ -19,6 +21,27 @@ export default function Register() {
 
   function handleSubmit(event) {
     event.preventDefault();
+    handleRegister();
+  }
+
+  async function handleRegister() {
+    try {
+      const result = await axios.post(
+        "http://localhost:4000/register",
+        details
+      );
+      console.log(result.message);
+      navigate("/home");
+      setDetails((prevDetails) => {
+        const newDetails = {};
+        Object.keys(prevDetails).forEach((key) => {
+          newDetails[key] = "";
+        });
+        return newDetails;
+      });
+    } catch (error) {
+      console.log("Something went wrong with the registration process.");
+    }
   }
 
   return (
@@ -34,6 +57,7 @@ export default function Register() {
               value={details.name}
               placeHolder="Your Name"
               onChange={handleChange}
+              className={styles.inputFields}
             />
             <InputField
               label="Email: "
@@ -41,14 +65,17 @@ export default function Register() {
               value={details.email}
               placeHolder="Email Address"
               onChange={handleChange}
+              className={styles.inputFields}
+              autoComplete="on"
             />
             <InputField
-              label="Password "
+              label="Password: "
               name="password"
               value={details.password}
               placeHolder="Password"
               type="password"
               onChange={handleChange}
+              className={styles.inputFields}
             />
             <InputField
               label="Address: "
@@ -56,6 +83,7 @@ export default function Register() {
               value={details.address}
               placeHolder="Address"
               onChange={handleChange}
+              className={styles.inputFields}
             />
             <InputField
               label="Phone Number: "
@@ -63,7 +91,11 @@ export default function Register() {
               value={details.phone}
               placeHolder="Contact Number"
               onChange={handleChange}
+              className={styles.inputFields}
             />
+            <button type="submit" className={styles.registerButton}>
+              Register
+            </button>
           </form>
         </div>
       </div>

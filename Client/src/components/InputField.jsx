@@ -7,16 +7,19 @@ export default function InputField({
   value,
   onChange,
   name,
+  autoComplete = "off",
 }) {
   return (
     <>
       <label>{label}</label>
       <input
         type={type}
-        placeHolder={placeHolder}
+        placeholder={placeHolder}
         value={value}
         name={name}
         onChange={onChange}
+        required
+        autoComplete={autoComplete}
       />
     </>
   );
