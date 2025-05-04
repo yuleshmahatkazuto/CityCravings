@@ -1,9 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./nav.module.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 export default function Nav() {
-  const [loginStatus, setLoginStatus] = useState(false);
+  const [userName, setUsername] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  function displayInfo() {
+    setMenuOpen((preState) => !preState);
+  }
+
+  async function logOut() {
+    try {
+      await axios.post("http:/localhost:4000/logOut", {
+        withCredentials: true,
+      });
+      setUsername(null);
+    } catch (error) {
+      alert("Server error. Error logging out!");
+    }
+  }
+
+  useEffect(() => {
+    async function checkStatus() {
+      try {
+        const response = await axios.get(
+          "http://localhost:4000/check-session",
+          {
+            withCredentials: true,
+          }
+        );
+        if (response.data.user) {
+          setUsername(response.data.user);
+        }
+      } catch (error) {
+        console.log("Error fetchin session:", error);
+      }
+    }
+    checkStatus();
+  }, []);
+
   return (
     <div className={styles.navContainer}>
       <Link to="/" className={styles.customLink}>
@@ -27,9 +64,17 @@ export default function Nav() {
             </p>
           </div>
         </div>
-        {loginStatus ? (
+        {userName !== null ? (
           <div className={styles.hamburgerMenu}>
-            <img src="/assets/hamburger.svg" alt="Menu" />
+            <span className={styles.userDetail}>{userName}</span>
+            <img src="/assets/hamburger.svg" alt="Menu" onClick={displayInfo} />
+            {menuOpen && (
+              <div className={styles.dropDown}>
+                <p>Cart</p>
+                <p>Account</p>
+                <p onClick={logOut}>Logout</p>
+              </div>
+            )}
           </div>
         ) : (
           <div className={styles.rightLeftSide}>

@@ -30,8 +30,6 @@ export default function Register() {
         "http://localhost:4000/register",
         details
       );
-      console.log(result.message);
-      navigate("/home");
       setDetails((prevDetails) => {
         const newDetails = {};
         Object.keys(prevDetails).forEach((key) => {
@@ -39,6 +37,8 @@ export default function Register() {
         });
         return newDetails;
       });
+      console.log(result.message);
+      navigate("/home");
     } catch (error) {
       console.log("Something went wrong with the registration process.");
     }

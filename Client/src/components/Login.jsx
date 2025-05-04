@@ -19,13 +19,19 @@ export default function Login() {
 
   async function handleLogin() {
     try {
-      console.log("Try block is being executed.");
-      console.log(credentials.email, credentials.password);
-      const response = await axios.post("http://localhost:4000/login", {
-        email: credentials.email,
-        password: credentials.password,
-      });
-      navigate("/home");
+      const response = await axios.post(
+        "http://localhost:4000/login",
+        {
+          email: credentials.email,
+          password: credentials.password,
+        },
+        { withCredentials: true }
+      );
+      if (response.data.verified) {
+        navigate("/home");
+      } else {
+        alert(response.data.message);
+      }
     } catch (error) {
       console.log("Error navigating to home page.");
     }
