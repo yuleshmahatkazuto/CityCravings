@@ -1,0 +1,59 @@
+.container {
+  display: flex;
+  background-color: var(--color-lightGrey);
+  width: 97%;
+  height: 20%;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: space-between;
+  border-radius: 5px;
+  padding: 0.56rem 2rem;
+  font-size: 18px;
+  margin: 0 0 0 15px;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+}
+
+.quantity {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  background-color: var(--color-grey);
+  padding: 4px;
+  border-radius: 30px;
+  gap: 7px;
+}
+
+.dNQ {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.buttons {
+  font-weight: 900;
+  font-size: 20px;
+  padding: 5px;
+}
+
+.buttons:hover {
+  background-color: rgb(200, 198, 198);
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+.delete img {
+  width: 30px;
+  cursor: pointer;
+}
+
+.delete img:hover {
+  width: 37px;
+  background-color: rgb(232, 232, 232);
+  padding: 2px;
+  border-radius: 50%;
+}

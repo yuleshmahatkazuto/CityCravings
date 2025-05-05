@@ -21,9 +21,9 @@ export function CartProvider({ children }) {
   function reduceFromCart(item) {
     setCartItems((prev) => {
       return prev.map((arrayItem) => {
-        if (arrayItem.name === item.name)
+        if (arrayItem.name === item.name) {
           return { ...arrayItem, quantity: arrayItem.quantity - 1 };
-        else return arrayItem;
+        } else return arrayItem;
       });
     });
   }

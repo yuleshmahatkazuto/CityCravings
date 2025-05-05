@@ -1,14 +1,14 @@
-.categoryBar{
+.categoryBar {
   display: flex;
   width: 100%;
   position: relative;
   justify-content: space-around;
   padding: 15px;
   font-family: var(--font-irish);
-  font-size: 30px;  
+  font-size: 30px;
 }
 
-.categories{
+.categories {
   display: flex;
   text-align: center;
   gap: 5px;
@@ -16,25 +16,25 @@
   padding: 5px;
 }
 
-.flags{
+.flags {
   width: 30px;
 }
 
-.foodNBasket{
+.foodNBasket {
   display: flex;
   width: 100%;
   justify-content: space-between;
   position: relative;
 }
 
-.foodSection{
+.foodSection {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.selectedCategory{
+.selectedCategory {
   background-color: var(--color-grey);
   border-radius: 5px;
 }

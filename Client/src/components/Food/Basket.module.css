@@ -1,29 +1,36 @@
-.container{
+.container {
+  width: 350px;
   min-width: 350px;
   display: flex;
   align-items: center;
   flex-direction: column;
   font-family: var(--font-irish);
-  justify-content: space-around;  
-  height: 80vh;
-  box-shadow: -5px 0 12px rgba(0,0,0,0.1);
+  justify-content: space-around;
+  min-height: 80vh;
+  box-shadow: -5px 0 12px rgba(0, 0, 0, 0.1);
 }
 
-.basket{
+.basket {
   position: absolute;
-  top: 20px;
+  top: 5px;
 }
 
-.emptyBasket{
+.items {
+  width: 90%;
+  height: 80%;
+  overflow-y: scroll;
+}
+
+.emptyBasket {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.emptyBasket img{
+.emptyBasket img {
   width: 50px;
-} 
+}
 
-.emptyBasket h2{
+.emptyBasket h2 {
   font-size: 15px;
 }
