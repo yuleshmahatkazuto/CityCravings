@@ -103,6 +103,14 @@ app.get("/check-session", async (req, res) => {
   }
 });
 
+app.post("/logOut", (req, res) => {
+  req.logOut(() => {
+    req.session.destroy();
+    res.clearCookie("connect.sid");
+    res.status(200).json({ message: "Logged out" });
+  });
+});
+
 passport.use(
   new Strategy({ usernameField: "email" }, async function verify(
     email,

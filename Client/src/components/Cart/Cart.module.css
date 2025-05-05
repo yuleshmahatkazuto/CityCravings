@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.cartContainer {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  width: 60%;
+  background-color: var(--color-primary);
+}

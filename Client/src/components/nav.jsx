@@ -6,14 +6,13 @@ import axios from "axios";
 export default function Nav() {
   const [userName, setUsername] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
-
   function displayInfo() {
     setMenuOpen((preState) => !preState);
   }
 
   async function logOut() {
     try {
-      await axios.post("http:/localhost:4000/logOut", {
+      await axios.post("http://localhost:4000/logOut", {
         withCredentials: true,
       });
       setUsername(null);
@@ -70,7 +69,9 @@ export default function Nav() {
             <img src="/assets/hamburger.svg" alt="Menu" onClick={displayInfo} />
             {menuOpen && (
               <div className={styles.dropDown}>
-                <p>Cart</p>
+                <p>
+                  <Link to="/cart">Cart</Link>
+                </p>
                 <p>Account</p>
                 <p onClick={logOut}>Logout</p>
               </div>

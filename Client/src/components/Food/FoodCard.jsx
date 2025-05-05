@@ -10,7 +10,12 @@ export default function FoodCard({ title, price, information, imageUrl }) {
         <h2 className={styles.FoodPrice}>{price}</h2>
         <p className={styles.information}>{information}</p>
       </div>
-      <FoodImg className={styles.image} imageUrl={imageUrl} />
+      <FoodImg
+        className={styles.image}
+        imageUrl={imageUrl}
+        name={title}
+        price={price}
+      />
     </div>
   );
 }

@@ -8,6 +8,7 @@ import Forgot from "./components/Forgot";
 import Order from "./components/Order";
 import About from "./components/About";
 import Register from "./components/Register.jsx";
+import Cart from "./components/Cart/Cart.jsx";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/order" element={<Order />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/cart" element={<Cart />} />
       </Routes>
     </Router>
   );
