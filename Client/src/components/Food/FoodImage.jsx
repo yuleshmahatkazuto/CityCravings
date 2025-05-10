@@ -10,7 +10,9 @@ export default function FoodImage({ imageUrl, name, price }) {
       <button
         type="button"
         className={styles.addToCart}
-        onClick={() => addToCart({ name: name, price: price })}
+        onClick={() => {
+          addToCart({ name: name, price: price });
+        }}
       >
         +
       </button>

@@ -18,20 +18,24 @@ export default function FoodComponent({ name, money }) {
       <div className={styles.dNQ}>
         <div
           className={styles.delete}
-          onClick={() => removeFromCart({ name: name })}
+          onClick={() => removeFromCart({ name: name, price: money })}
         >
           <img src="/assets/delete.svg" />
         </div>
         <div className={styles.quantity}>
           <span
-            onClick={() => reduceFromCart({ name: name, price: money })}
+            onClick={() =>
+              reduceFromCart({ name: name, price: money, unitPrice: money })
+            }
             className={styles.buttons}
           >
             -
           </span>
           <span>{quantity}</span>
           <span
-            onClick={() => addToCart({ name: name, price: money })}
+            onClick={() =>
+              addToCart({ name: name, price: money, unitPrice: money })
+            }
             className={styles.buttons}
           >
             +

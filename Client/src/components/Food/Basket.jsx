@@ -5,7 +5,7 @@ import { useCart } from "../CartContext.jsx";
 
 export default function Basket() {
   const [filled, setFilled] = useState(false);
-  const { cartItems } = useCart();
+  const { cartItems, total } = useCart();
   return (
     <div className={styles.container}>
       <h1 className={styles.basket}>Basket</h1>
@@ -21,6 +21,10 @@ export default function Basket() {
             <FoodComponent name={item.name} money={item.price} />
           ))
         )}
+      </div>
+      <div className={styles.total}>
+        <p className={styles.label}>Total: </p>
+        <p className={styles.totalValue}>{total}</p>
       </div>
     </div>
   );

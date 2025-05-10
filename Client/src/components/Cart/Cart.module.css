@@ -22,4 +22,6 @@
   background-color: var(--color-grey);
   border-radius: 20px;
   flex-direction: column;
+  overflow-y: scroll;
+  max-width: 500px;
 }
