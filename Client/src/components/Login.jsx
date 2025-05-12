@@ -28,7 +28,11 @@ export default function Login() {
         { withCredentials: true }
       );
       if (response.data.verified) {
-        navigate("/home");
+        if (response.data.role === "customer") {
+          navigate("/home");
+        } else {
+          navigate("/adminPage");
+        }
       } else {
         alert(response.data.message);
       }

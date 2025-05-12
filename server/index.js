@@ -65,7 +65,14 @@ app.post("/login", (req, res, next) => {
     req.logIn(user, (err) => {
       if (err) return res.status(500).json({ message: "Login failed" });
       console.log("Login successful");
-      return res.status(200).json({ email: user.email, verified: true });
+      return res
+        .status(200)
+        .json({
+          email: user.email,
+          userId: user.id,
+          verified: true,
+          role: user.role,
+        });
     });
   })(req, res, next);
 }); //password Authentication and login
@@ -96,7 +103,7 @@ app.get("/check-session", async (req, res) => {
     const user = req.user;
     console.log(req.user);
     const name = user.name.split(" ")[0];
-    res.status(200).json({ user: name });
+    res.status(200).json({ user: name, userId: user.id });
   } else {
     console.log("user doesnt exist");
     res.json({ user: null });
@@ -111,6 +118,43 @@ app.post("/logOut", (req, res) => {
   });
 });
 
+app.post(
+  "/handleSubmit",
+  (req, res, next) => {
+    if (!req.isAuthenticated()) {
+      console.log("The user is not Authenticated");
+      return res
+        .status(401)
+        .json({ message: "You must be logged in to place an order!!!" });
+    }
+    next();
+  },
+  async (req, res) => {
+    console.log("The user object looks like this" + req.user);
+    const userId = req.user.id;
+    const total_price = req.body.total;
+    const items = req.body.items;
+    try {
+      const result = await pool.query(
+        "insert into orders (user_id, total_price, status) values ($1, $2, $3) returning id",
+        [userId, total_price, "Cooking"]
+      );
+
+      const id = result.rows[0].id;
+      for (let i = 0; i < items.length; i++) {
+        await pool.query(
+          "insert into order_items (order_id, quantity, name) values($1, $2, $3)",
+          [id, items[i].quantity, items[i].name]
+        );
+      }
+      console.log("Succeffuly inserted into the database");
+      res.status(200).json({ message: "Success" });
+    } catch (error) {
+      console.log("error inserting into the database");
+    }
+  }
+);
+
 passport.use(
   new Strategy({ usernameField: "email" }, async function verify(
     email,
@@ -119,7 +163,7 @@ passport.use(
   ) {
     try {
       const result = await pool.query(
-        "select email, password from users where email = $1",
+        "select id, email, role password from users where email = $1",
         [email.toLowerCase()]
       );
       if (result.rows.length === 0) {
@@ -140,13 +184,13 @@ passport.use(
 );
 
 passport.serializeUser((user, cb) => {
-  cb(null, user.email);
+  cb(null, { email: user.email, id: user.id, role: user.role });
 });
 
-passport.deserializeUser(async (email, cb) => {
+passport.deserializeUser(async (serializedUser, cb) => {
   try {
     const result = await pool.query("select * from users where email = $1", [
-      email,
+      serializedUser.email,
     ]);
 
     if (result.rows.length === 0) {

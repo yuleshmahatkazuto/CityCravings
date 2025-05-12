@@ -4,17 +4,40 @@ import styles from "./Cart.module.css";
 import FoodComponent from "./FoodComponent.jsx";
 import Footer from "../Footer.jsx";
 import { useCart } from "../CartContext.jsx";
+import axios from "axios";
 
 export default function Cart() {
-  const { cartItems } = useCart();
+  async function handleSubmit() {
+    try {
+      const result = await axios.post(
+        "http://localhost:4000/handleSubmit",
+        {
+          total: cart.total,
+        },
+        { withCredentials: true }
+      );
+
+      if (result.data.message === "Success") {
+        updateCart();
+      }
+    } catch (error) {}
+  }
+  const { cart, updateCart } = useCart();
   return (
     <div className={styles.container}>
       <Nav />
       <div className={styles.container2}>
         <div className={styles.cartContainer}>
-          {cartItems.map((item) => (
+          {cart.items.map((item) => (
             <FoodComponent name={item.name} money={item.price} />
           ))}
+          <div className={styles.total}>
+            <p className={styles.label}>Total: </p>
+            <p className={styles.totalValue}>${cart.total}</p>
+          </div>
+          <button className={styles.confirm} onClick={handleSubmit}>
+            Place Order
+          </button>
         </div>
       </div>
       <Footer />

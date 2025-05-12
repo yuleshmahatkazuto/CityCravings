@@ -9,10 +9,11 @@
   min-height: 80vh;
   box-shadow: -5px 0 12px rgba(0, 0, 0, 0.1);
   max-height: 100vh;
+  position: relative;
 }
 
 .basket {
-  position: absolute;
+  position: relative;
   top: 5px;
 }
 
@@ -24,6 +25,7 @@
   flex-direction: column;
   gap: 5px;
   overflow-x: hidden;
+  position: relative;
 }
 
 .emptyBasket {
@@ -38,4 +40,27 @@
 
 .emptyBasket h2 {
   font-size: 15px;
+}
+
+.buttonContainer {
+  width: 100%;
+  text-align: center;
+}
+
+.confirm {
+  background-color: var(--color-primary);
+  padding: 10px;
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+  width: 70%;
+  font-family: var(--font-irish);
+  font-size: 20px;
+  margin: 10px 0;
+}
+
+.totalValue {
+  font-family: var(--font-irish);
+  font-size: 20px;
+  font-weight: 700;
 }

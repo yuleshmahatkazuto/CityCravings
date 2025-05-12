@@ -24,4 +24,23 @@
   flex-direction: column;
   overflow-y: scroll;
   max-width: 500px;
+  gap: 10px;
+}
+
+.confirm {
+  background-color: var(--color-primary);
+  font-weight: 700;
+  font-size: 18px;
+  font-family: var(--font-irish);
+  padding: 10px;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  width: 50%;
+}
+
+.totalValue {
+  font-family: var(--font-irish);
+  font-size: 20px;
+  font-weight: 700;
 }

@@ -3,44 +3,68 @@ import React, { useState, createContext, useContext } from "react";
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
-  const [cartItems, setCartItems] = useState([]);
-  const [total, setTotal] = useState(0);
+  const [cart, setCart] = useState({
+    items: [],
+    total: 0,
+  });
 
-  function addToCart(item) {
-    setCartItems((prev) => {
-      const existing = prev.find((i) => i.name === item.name); //check if items already exists
+  function addToCart(itemToAdd) {
+    setCart((prev) => {
+      const existing = cart.items.find((i) => i.name === itemToAdd.name);
+
       if (existing) {
-        //update previous if exists
-        const updated = prev.map((f) =>
-          f.name === item.name
+        const updatedItems = prev.items.map((cartItem) =>
+          cartItem.name === itemToAdd.name
             ? {
-                ...f,
-                quantity: f.quantity + 1,
-                price: ((f.quantity + 1) * f.unitPrice).toFixed(2),
+                ...cartItem,
+                quantity: cartItem.quantity + 1,
+                price: Number(
+                  ((cartItem.quantity + 1) * cartItem.unitPrice).toFixed(2)
+                ),
               }
-            : f
+            : cartItem
         );
-        return updated;
+
+        return {
+          items: updatedItems,
+          total: Number((prev.total + existing.unitPrice).toFixed(2)),
+        };
       } else {
-        return [
-          ...prev,
-          {
-            name: item.name,
-            quantity: 1,
-            price: item.price,
-            unitPrice: item.price,
-          },
-        ];
+        return {
+          items: [
+            ...prev.items,
+            {
+              name: itemToAdd.name,
+              quantity: 1,
+              price: Number(itemToAdd.price),
+              unitPrice: Number(itemToAdd.price),
+            },
+          ],
+          total: Number((prev.total + itemToAdd.price).toFixed(2)),
+        };
       }
     });
-
-    setTotal((prevTotal) => prevTotal + item.price);
   }
 
   function reduceFromCart(item) {
-    setCartItems((prev) => {
-      return prev.map((arrayItem) => {
-        if (arrayItem.name === item.name && arrayItem.quantity > 0) {
+    setCart((prev) => {
+      const existing = prev.items.find((i) => i.name === item.name);
+
+      if (!existing || existing.quantity <= 0) {
+        return prev;
+      }
+
+      const unitPrice = existing.unitPrice;
+
+      if (existing.quantity === 1) {
+        return {
+          items: prev.items.filter((i) => i.name != item.name),
+          total: Number((prev.total - unitPrice).toFixed(2)),
+        };
+      }
+
+      const updatedItems = prev.items.map((arrayItem) => {
+        if (arrayItem.name === item.name) {
           return {
             ...arrayItem,
             quantity: arrayItem.quantity - 1,
@@ -48,29 +72,44 @@ export function CartProvider({ children }) {
           };
         } else return arrayItem;
       });
+      return {
+        items: updatedItems,
+        total: Number((prev.total - unitPrice).toFixed(2)),
+      };
     });
   }
 
   function removeFromCart(item) {
-    setTotal((prev) => {
-      const f = cartItems.find((i) => i.name === i.item);
-      if (f) return total - Number(f.price);
+    setCart((prev) => {
+      const existing = prev.items.find((i) => i.name === item.name);
+
+      if (!existing) {
+        return prev;
+      }
+
+      const updatedItems = prev.items.filter((i) => i.name !== existing.name);
+      return {
+        items: updatedItems,
+        total: Number((prev.total - existing.price).toFixed(2)),
+      };
     });
-    setCartItems((prev) => {
-      return prev.filter((f) => f.name != item.name);
+  }
+
+  function updateCart() {
+    setCart({
+      items: [],
+      total: 0,
     });
   }
 
   return (
     <CartContext.Provider
       value={{
-        cartItems,
+        cart,
         addToCart,
         reduceFromCart,
         removeFromCart,
-        unitPrice,
-        setUnitPrice,
-        total,
+        updateCart,
       }}
     >
       {children}
