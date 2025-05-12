@@ -65,14 +65,12 @@ app.post("/login", (req, res, next) => {
     req.logIn(user, (err) => {
       if (err) return res.status(500).json({ message: "Login failed" });
       console.log("Login successful");
-      return res
-        .status(200)
-        .json({
-          email: user.email,
-          userId: user.id,
-          verified: true,
-          role: user.role,
-        });
+      return res.status(200).json({
+        email: user.email,
+        userId: user.id,
+        verified: true,
+        role: user.role,
+      });
     });
   })(req, res, next);
 }); //password Authentication and login
@@ -155,6 +153,19 @@ app.post(
   }
 );
 
+app.post(
+  "/getOrder",
+  (req, res, next) => {
+    if (req.user.role === "customer") {
+      return res.status(403).json({ message: "Not authorized!!" });
+    } else {
+      next();
+    }
+  },
+
+  (req, res) => {}
+);
+
 passport.use(
   new Strategy({ usernameField: "email" }, async function verify(
     email,
@@ -163,13 +174,14 @@ passport.use(
   ) {
     try {
       const result = await pool.query(
-        "select id, email, role password from users where email = $1",
+        "select id, email, role, password from users where email = $1",
         [email.toLowerCase()]
       );
       if (result.rows.length === 0) {
         return cb(null, false, { message: "Invalid credentials" });
       } else {
         const user = result.rows[0];
+        console.log(user.role);
         if (user.password === password) {
           return cb(null, user);
         } else {
