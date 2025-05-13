@@ -12,9 +12,13 @@ export default function Nav() {
 
   async function logOut() {
     try {
-      await axios.post("http://localhost:4000/logOut", {
-        withCredentials: true,
-      });
+      await axios.post(
+        "http://localhost:4000/logOut",
+        {},
+        {
+          withCredentials: true,
+        }
+      );
       setUsername(null);
     } catch (error) {
       alert("Server error. Error logging out!");
@@ -72,7 +76,11 @@ export default function Nav() {
                 <p>
                   <Link to="/cart">Cart</Link>
                 </p>
+                <p>
+                  <Link to="/myOrders">MyOrders</Link>
+                </p>
                 <p>Account</p>
+
                 <p onClick={logOut}>Logout</p>
               </div>
             )}

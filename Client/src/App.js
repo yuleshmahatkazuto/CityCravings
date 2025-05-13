@@ -10,7 +10,8 @@ import About from "./components/About";
 import Register from "./components/Register.jsx";
 import Cart from "./components/Cart/Cart.jsx";
 import AdminPage from "./components/AdminPage.jsx";
-
+import MyOrders from "./components/MyOrders.jsx";
+import "./App.css";
 function App() {
   return (
     <Router>
@@ -24,6 +25,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/adminPage" element={<AdminPage />} />
+        <Route path="/myOrders" element={<MyOrders />} />
       </Routes>
     </Router>
   );

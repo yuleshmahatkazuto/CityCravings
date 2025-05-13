@@ -10,7 +10,7 @@ export function CartProvider({ children }) {
 
   function addToCart(itemToAdd) {
     setCart((prev) => {
-      const existing = cart.items.find((i) => i.name === itemToAdd.name);
+      const existing = prev.items.find((i) => i.name === itemToAdd.name);
 
       if (existing) {
         const updatedItems = prev.items.map((cartItem) =>
@@ -40,7 +40,7 @@ export function CartProvider({ children }) {
               unitPrice: Number(itemToAdd.price),
             },
           ],
-          total: Number((prev.total + itemToAdd.price).toFixed(2)),
+          total: Number((prev.total + Number(itemToAdd.price)).toFixed(2)),
         };
       }
     });

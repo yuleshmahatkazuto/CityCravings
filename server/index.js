@@ -96,14 +96,12 @@ app.post("/register", async (req, res) => {
   }
 }); //register user
 
-app.get("/check-session", async (req, res) => {
+app.get("/check-session", (req, res) => {
   if (req.isAuthenticated()) {
     const user = req.user;
-    console.log(req.user);
     const name = user.name.split(" ")[0];
     res.status(200).json({ user: name, userId: user.id });
   } else {
-    console.log("user doesnt exist");
     res.json({ user: null });
   }
 });
@@ -153,18 +151,102 @@ app.post(
   }
 );
 
-app.post(
+app.get(
   "/getOrder",
   (req, res, next) => {
-    if (req.user.role === "customer") {
+    if (req.user && req.user.role === "customer") {
+      console.log("Customer login not authorized");
       return res.status(403).json({ message: "Not authorized!!" });
     } else {
       next();
     }
   },
+  async (req, res) => {
+    try {
+      const result = await pool.query(
+        "select order_id, user_id, name,total_price, status, quantity from order_items inner join orders on order_items.order_id = orders.id"
+      );
+      const groupedItems = [];
+      result.rows.forEach((row) => {
+        let existing = groupedItems.find(
+          (object) => object.order_id === row.order_id
+        );
 
-  (req, res) => {}
+        if (existing) {
+          existing.items.push(row);
+        } else {
+          console.log(row);
+          groupedItems.push({
+            order_id: row.order_id,
+            total_price: row.total_price,
+            user_id: row.user_id,
+            items: [row],
+            status: row.status,
+          });
+        }
+      });
+      res.status(200).json({ groupedItems: groupedItems });
+    } catch (error) {
+      console.log("Error fetching the data from the database.");
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
 );
+
+app.get(
+  "/getOrderCustomer",
+  (req, res, next) => {
+    req.isAuthenticated() ? next() : res.json({ verified: false });
+  },
+
+  async (req, res) => {
+    try {
+      const userId = req.user.id;
+      const result = await pool.query(
+        `select order_id, user_id, quantity, name, total_price, status 
+        from 
+        order_items 
+        inner join orders on order_items.order_id = orders.id where user_id = $1`,
+        [userId]
+      );
+      const groupedItems = [];
+
+      result.rows.forEach((row) => {
+        const existing = groupedItems.find(
+          (order) => order.order_id === row.order_id
+        );
+        if (!existing) {
+          groupedItems.push({
+            order_id: row.order_id,
+            user_id: row.user_id,
+            total_price: row.total_price,
+            status: row.status,
+            items: [{ name: row.name, quantity: row.quantity }],
+          });
+        } else {
+          groupedItems.items.push({ name: row.name, quantity: row.quantity });
+        }
+      });
+
+      res.json({ verified: true, message: "Successful" });
+    } catch (error) {
+      res.json({ verified: true, message: "Unsuccessful" });
+      console.log("Error fetching data from the database.");
+    }
+  }
+);
+
+app.patch("/updateStatus", async (req, res) => {
+  const order_id = req.body.order_id;
+  try {
+    await pool.query("update orders set status='Ready' WHERE id = $1", [
+      order_id,
+    ]);
+    res.status(200).json({ message: "Updating order status was successful" });
+  } catch (error) {
+    console.log("Error updating the order status");
+  }
+});
 
 passport.use(
   new Strategy({ usernameField: "email" }, async function verify(
@@ -181,7 +263,6 @@ passport.use(
         return cb(null, false, { message: "Invalid credentials" });
       } else {
         const user = result.rows[0];
-        console.log(user.role);
         if (user.password === password) {
           return cb(null, user);
         } else {
