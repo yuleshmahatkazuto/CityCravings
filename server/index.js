@@ -12,22 +12,24 @@ config();
 const port = 4000;
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://citycravings1.onrender.com/",
     credentials: true,
   })
 );
 
+app.set("trust proxy", 1);
+
 app.use(
   session({
-    secret: "Yulrubis@58", // Change this to a random secret key
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: false,
+      secure: true,
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24,
       sameSite: "lax",
-    }, // If using HTTPS, set secure: true
+    },
   })
 );
 
@@ -224,13 +226,17 @@ app.get(
             items: [{ name: row.name, quantity: row.quantity }],
           });
         } else {
-          groupedItems.items.push({ name: row.name, quantity: row.quantity });
+          existing.items.push({ name: row.name, quantity: row.quantity });
         }
       });
 
-      res.json({ verified: true, message: "Successful" });
+      res.json({
+        verified: true,
+        message: "Successful",
+        groupedItems: groupedItems,
+      });
     } catch (error) {
-      res.json({ verified: true, message: "Unsuccessful" });
+      res.status(500).json({ verified: true, message: "Unsuccessful" });
       console.log("Error fetching data from the database.");
     }
   }

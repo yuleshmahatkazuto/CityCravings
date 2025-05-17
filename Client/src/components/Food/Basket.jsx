@@ -1,10 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Basket.module.css";
 import FoodComponent from "../Cart/FoodComponent.jsx";
 import { useCart } from "../CartContext.jsx";
 import axios from "axios";
 
 export default function Basket() {
+  const [confirmed, setConfirmed] = useState(false);
+
+  useEffect(() => {
+    if (confirmed) {
+      const timer = setTimeout(() => {
+        setConfirmed(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [confirmed]);
   async function handleSubmit() {
     try {
       const result = await axios.post(
@@ -17,6 +27,7 @@ export default function Basket() {
       );
 
       if (result.data.message === "Success") {
+        setConfirmed(true);
         updateCart();
       }
     } catch (error) {}
@@ -24,6 +35,14 @@ export default function Basket() {
   const { cart, updateCart } = useCart();
   return (
     <div className={styles.container}>
+      {confirmed && (
+        <div className={styles.confirmBox}>
+          <p className={styles.title}>Thank you for placing your order.</p>
+          <p className={styles.message}>
+            Please keep the amount ready when receiving your order.
+          </p>
+        </div>
+      )}
       <h1 className={styles.basket}>Basket</h1>
       <div className={styles.items}>
         {cart.items.length === 0 ? (
