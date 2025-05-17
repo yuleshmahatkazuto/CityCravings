@@ -12,7 +12,7 @@ const MyOrders = () => {
     async function getOrders() {
       try {
         const result = await axios.get(
-          "http://localhost:4000/getOrderCustomer",
+          "https://citycravings-server.onrender.com/getOrderCustomer",
           {
             withCredentials: true,
           }

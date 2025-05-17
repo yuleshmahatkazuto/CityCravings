@@ -12,7 +12,7 @@ config();
 const port = 4000;
 app.use(
   cors({
-    origin: "https://citycravings1.onrender.com/",
+    origin: "https://citycravings1.onrender.com",
     credentials: true,
   })
 );
@@ -28,7 +28,7 @@ app.use(
       secure: true,
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24,
-      sameSite: "lax",
+      sameSite: "none",
     },
   })
 );

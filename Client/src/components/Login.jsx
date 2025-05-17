@@ -20,7 +20,7 @@ export default function Login() {
   async function handleLogin() {
     try {
       const response = await axios.post(
-        "http://localhost:4000/login",
+        "https://citycravings-server.onrender.com/login",
         {
           email: credentials.email,
           password: credentials.password,

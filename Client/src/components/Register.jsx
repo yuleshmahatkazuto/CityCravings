@@ -27,7 +27,7 @@ export default function Register() {
   async function handleRegister() {
     try {
       const result = await axios.post(
-        "http://localhost:4000/register",
+        "https://citycravings-server.onrender.com/register",
         details
       );
       setDetails((prevDetails) => {

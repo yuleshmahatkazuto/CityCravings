@@ -44,9 +44,12 @@ export default function AdminPage() {
 
     async function getOrders() {
       try {
-        const result = await axios.get("http://localhost:4000/getOrder", {
-          withCredentials: true,
-        });
+        const result = await axios.get(
+          "https://citycravings-server.onrender.com/getOrder",
+          {
+            withCredentials: true,
+          }
+        );
         if (result.data) {
           setOrderList(result.data.groupedItems);
         }
@@ -69,7 +72,7 @@ export default function AdminPage() {
     );
 
     await axios.patch(
-      "http://localhost:4000/updateStatus",
+      "https://citycravings-server.onrender.com/updateStatus",
       { order_id: orderId },
       { withCredentials: true }
     );

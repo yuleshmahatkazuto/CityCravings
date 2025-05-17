@@ -18,7 +18,7 @@ export default function Basket() {
   async function handleSubmit() {
     try {
       const result = await axios.post(
-        "http://localhost:4000/handleSubmit",
+        "https://citycravings-server.onrender.com/handleSubmit",
         {
           total: cart.total,
           items: cart.items,

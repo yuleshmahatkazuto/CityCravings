@@ -13,7 +13,7 @@ export default function Nav() {
   async function logOut() {
     try {
       await axios.post(
-        "http://localhost:4000/logOut",
+        "https://citycravings-server.onrender.com/logOut",
         {},
         {
           withCredentials: true,
@@ -29,7 +29,7 @@ export default function Nav() {
     async function checkStatus() {
       try {
         const response = await axios.get(
-          "http://localhost:4000/check-session",
+          "https://citycravings-server.onrender.com/check-session",
           {
             withCredentials: true,
           }
