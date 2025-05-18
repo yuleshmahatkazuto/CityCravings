@@ -62,7 +62,7 @@ app.get("/api", async (req, res) => {});
 app.post("/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) {
-      console.log("Error in authentication with passport middleware");
+      console.log("Error in authentication with passport middleware", err);
       return res.status(500).json({ message: "Server error" });
     }
     if (!user) {
@@ -256,7 +256,7 @@ app.patch("/updateStatus", async (req, res) => {
     ]);
     res.status(200).json({ message: "Updating order status was successful" });
   } catch (error) {
-    console.log("Error updating the order status");
+    console.log("Error updating the order status", error);
   }
 });
 
@@ -282,7 +282,7 @@ passport.use(
         }
       }
     } catch (error) {
-      console.log("Error on the database connection part");
+      console.log("Error on the database connection part", error);
       return cb(error);
     }
   })
