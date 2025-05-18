@@ -61,8 +61,14 @@ app.get("/api", async (req, res) => {});
 
 app.post("/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
-    if (err) return res.status(500).json({ message: "Server error" });
-    if (!user) return res.status(401).json({ message: info.message });
+    if (err) {
+      console.log("Error in authentication with passport middleware");
+      return res.status(500).json({ message: "Server error" });
+    }
+    if (!user) {
+      console.log("The user is not available");
+      return res.status(401).json({ message: info.message });
+    }
 
     req.logIn(user, (err) => {
       if (err) return res.status(500).json({ message: "Login failed" });
