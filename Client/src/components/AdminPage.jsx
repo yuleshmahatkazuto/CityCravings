@@ -15,7 +15,7 @@ export default function AdminPage() {
   async function logOut() {
     try {
       await axios.post(
-        "http://localhost:4000/logOut",
+        "https://citycravings-server.onrender.com/logOut",
         {},
         {
           withCredentials: true,
@@ -31,9 +31,12 @@ export default function AdminPage() {
   useEffect(() => {
     async function checkStatus() {
       try {
-        const result = await axios.get("http://localhost:4000/check-session", {
-          withCredentials: true,
-        });
+        const result = await axios.get(
+          "https://citycravings-server.onrender.com/check-session",
+          {
+            withCredentials: true,
+          }
+        );
         if (result.data.user) {
           setUserName(result.data.user);
         }
