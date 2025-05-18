@@ -282,7 +282,7 @@ passport.use(
         }
       }
     } catch (error) {
-      console.log("Error on the query part.");
+      console.log("Error on the database connection part");
       return cb(error);
     }
   })
