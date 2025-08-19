@@ -6,14 +6,16 @@ import { Pool } from "pg";
 import session from "express-session";
 import passport from "passport";
 import { Strategy } from "passport-local";
+import { decodePassword, encodePassword } from "./utils/passwordHelper.js";
 
+const allowedOrigin = process.env.CLIENT_URL || "http://localhost:3000";
 const app = express();
 config();
 const port = 4000;
 app.use(
   cors({
-    origin: "https://citycravings1.onrender.com",
-    credentials: true,
+    origin: allowedOrigin, // must be explicit, not "*"
+    credentials: true, // allow cookies/session
   })
 );
 
@@ -25,10 +27,10 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: true,
+      secure: false,
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24,
-      sameSite: "none",
+      sameSite: "lax",
     },
   })
 );
@@ -85,7 +87,7 @@ app.post("/login", (req, res, next) => {
 
 app.post("/register", async (req, res) => {
   const email = req.body.email;
-  const password = req.body.password;
+  const password = await encodePassword(req.body.password);
   const name = req.body.name;
   const address = req.body.address;
   const phone = req.body.phone;
@@ -275,7 +277,7 @@ passport.use(
         return cb(null, false, { message: "Invalid credentials" });
       } else {
         const user = result.rows[0];
-        if (user.password === password) {
+        if (await decodePassword(password, user.password)) {
           return cb(null, user);
         } else {
           return cb(null, false, { message: "Invalid password" });
