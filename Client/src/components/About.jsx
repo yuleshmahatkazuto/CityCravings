@@ -9,9 +9,7 @@ export default function About() {
   useEffect(() => {
     async function getContent() {
       try {
-        const result = await axios.get(
-          "https://citycravings-server.onrender.com/api"
-        );
+        const result = await axios.get(process.env.REACT_APP_API_URL + "/api");
         setContent(result.data.message);
       } catch (error) {
         setContent("Catch block was triggered.");

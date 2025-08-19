@@ -27,7 +27,7 @@ export default function Register() {
   async function handleRegister() {
     try {
       const result = await axios.post(
-        "https://citycravings-server.onrender.com/register",
+        process.env.REACT_APP_API_URL + "/register",
         details
       );
       setDetails((prevDetails) => {

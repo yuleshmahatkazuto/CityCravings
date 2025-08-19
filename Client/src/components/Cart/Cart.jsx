@@ -10,7 +10,7 @@ export default function Cart() {
   async function handleSubmit() {
     try {
       const result = await axios.post(
-        "https://citycravings-server.onrender.com/handleSubmit",
+        process.env.REACT_APP_API_URL + "/handleSubmit",
         {
           total: cart.total,
         },

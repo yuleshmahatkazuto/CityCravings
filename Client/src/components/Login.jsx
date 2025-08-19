@@ -19,8 +19,9 @@ export default function Login() {
 
   async function handleLogin() {
     try {
+      console.log("backend api url", process.env.REACT_APP_API_URL);
       const response = await axios.post(
-        "https://citycravings-server.onrender.com/login",
+        process.env.REACT_APP_API_URL + "/login",
         {
           email: credentials.email,
           password: credentials.password,

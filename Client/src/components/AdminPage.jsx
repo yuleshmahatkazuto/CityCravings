@@ -15,7 +15,7 @@ export default function AdminPage() {
   async function logOut() {
     try {
       await axios.post(
-        "https://citycravings-server.onrender.com/logOut",
+        process.env.REACT_APP_API_URL + "/logOut",
         {},
         {
           withCredentials: true,
@@ -32,7 +32,7 @@ export default function AdminPage() {
     async function checkStatus() {
       try {
         const result = await axios.get(
-          "https://citycravings-server.onrender.com/check-session",
+          process.env.REACT_APP_API_URL + "/check-session",
           {
             withCredentials: true,
           }
@@ -48,7 +48,7 @@ export default function AdminPage() {
     async function getOrders() {
       try {
         const result = await axios.get(
-          "https://citycravings-server.onrender.com/getOrder",
+          process.env.REACT_APP_API_URL + "/getOrder",
           {
             withCredentials: true,
           }
@@ -75,7 +75,7 @@ export default function AdminPage() {
     );
 
     await axios.patch(
-      "https://citycravings-server.onrender.com/updateStatus",
+      "/updateStatus",
       { order_id: orderId },
       { withCredentials: true }
     );

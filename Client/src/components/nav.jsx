@@ -13,7 +13,7 @@ export default function Nav() {
   async function logOut() {
     try {
       await axios.post(
-        "https://citycravings-server.onrender.com/logOut",
+        process.env.REACT_APP_API_URL + "/logOut",
         {},
         {
           withCredentials: true,
@@ -29,7 +29,7 @@ export default function Nav() {
     async function checkStatus() {
       try {
         const response = await axios.get(
-          "https://citycravings-server.onrender.com/check-session",
+          process.env.REACT_APP_API_URL + "/check-session",
           {
             withCredentials: true,
           }
@@ -38,7 +38,7 @@ export default function Nav() {
           setUsername(response.data.user);
         }
       } catch (error) {
-        console.log("Error fetchin session:", error);
+        console.log("Error fetchin session:");
       }
     }
     checkStatus();
