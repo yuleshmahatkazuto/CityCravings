@@ -12,7 +12,7 @@ const allowedOrigin = process.env.CLIENT_URL || "http://localhost:3000";
 const app = express();
 config();
 const port = 4000;
-const isProduction = false;
+const isProduction = process.env.PRODUCTION;
 if (isProduction) {
   app.use(
     session({
