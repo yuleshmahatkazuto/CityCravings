@@ -12,6 +12,36 @@ const allowedOrigin = process.env.CLIENT_URL || "http://localhost:3000";
 const app = express();
 config();
 const port = 4000;
+const isProduction = false;
+if (isProduction) {
+  app.use(
+    session({
+      secret: process.env.SESSION_SECRET,
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        secure: true,
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24,
+        sameSite: "none",
+      },
+    })
+  );
+} else {
+  app.use(
+    session({
+      secret: process.env.SESSION_SECRET,
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        secure: false,
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24,
+        sameSite: "lax",
+      },
+    })
+  );
+}
 app.use(
   cors({
     origin: allowedOrigin, // must be explicit, not "*"
@@ -20,20 +50,6 @@ app.use(
 );
 
 app.set("trust proxy", 1);
-
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      secure: true,
-      httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24,
-      sameSite: "none",
-    },
-  })
-);
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -136,7 +152,6 @@ app.post(
     next();
   },
   async (req, res) => {
-    console.log("The user object looks like this" + req.user);
     const userId = req.user.id;
     const total_price = req.body.total;
     const items = req.body.items;
@@ -252,12 +267,14 @@ app.get(
 
 app.patch("/updateStatus", async (req, res) => {
   const order_id = req.body.order_id;
+  console.log(order_id);
   try {
     await pool.query("update orders set status='Ready' WHERE id = $1", [
       order_id,
     ]);
     res.status(200).json({ message: "Updating order status was successful" });
   } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
     console.log("Error updating the order status", error);
   }
 });
