@@ -75,8 +75,8 @@ export default function AdminPage() {
     );
 
     await axios.patch(
-      "/updateStatus",
-      { order_id: orderId },
+      "http://localhost:4000",
+      { order_id: orderId, status: newStatus },
       { withCredentials: true }
     );
   }

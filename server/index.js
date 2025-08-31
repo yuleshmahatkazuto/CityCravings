@@ -265,11 +265,14 @@ app.get(
   }
 );
 
-app.patch("/updateStatus", async (req, res) => {
+app.patch("/", async (req, res) => {
+  console.log("updatesattus triggered");
   const order_id = req.body.order_id;
-  console.log(order_id);
+  const status = req.body.status;
+  console.log(111, order_id, 222, status);
   try {
-    await pool.query("update orders set status='Ready' WHERE id = $1", [
+    await pool.query("update orders set status=$1 WHERE id = $2", [
+      status,
       order_id,
     ]);
     res.status(200).json({ message: "Updating order status was successful" });
